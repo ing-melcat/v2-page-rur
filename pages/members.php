@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../includes/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -155,7 +156,7 @@ button.project-info a:hover {
 
 <body class="store-page">
     <!--NavBar section -->
-    <?php include 'components/nav-bar.php'; ?>
+    <?php include __DIR__ . '/components/nav-bar.php'; ?>
     <!--NavBar section -->
 
 <div class="container py-4 py-lg-5">
@@ -822,9 +823,9 @@ button.project-info a:hover {
 <!-- WEB PAGE cards section -->
 
   <!-- Last modified-->
-  <?php include '../pages/components/last_modified.php'; ?>
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
   <!-- FOOTER -->
-  <?php include 'components/footer.php'; ?>
+  <?php include __DIR__ . '/components/footer.php'; ?>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -863,8 +864,6 @@ function filterMenu(status, btn) {
 }
 </script>
 
-
-</body>
 
 </body>
 </html>

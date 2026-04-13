@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../../includes/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,7 +43,7 @@
   </style>
 </head>
 <body>
-  <?php include '../components/nav-bar.php'; ?>
+  <?php include __DIR__ . '/../components/nav-bar.php'; ?>
 
   <div class="container-fluid">
     <div class="row">
@@ -102,7 +103,7 @@
       <!-- Main Content -->
       <main class="col-md-9 col-lg-10 content">
         <h1 class="fw-bold text-center mb-4">Research Unit of Robotics</h1>
-          <?php include '../components/last_modified.php'; ?>
+          <?php include __DIR__ . '/../components/last_modified.php'; ?>
         <hr>
         <h4 id="intro">ROVER RASSOR Documentation</h4>
         <p>Welcome to the documentation. Use the menu on the left to navigate through sections. <b>The following documentation corresponds 
@@ -156,7 +157,7 @@
     </div>
   </div>
 
-  <?php include '../components/footer.php'; ?>
+  <?php include __DIR__ . '/../components/footer.php'; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

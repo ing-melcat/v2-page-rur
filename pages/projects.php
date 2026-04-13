@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../includes/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +48,7 @@
 
 <body class="store-page">
         <!--NavBar section -->
-    <?php include 'components/nav-bar.php'; ?>
+    <?php include __DIR__ . '/components/nav-bar.php'; ?>
     <!--NavBar section -->
     <main class="store-main container py-4 py-lg-5">
     <section class="rur-page-section">
@@ -198,12 +199,12 @@
 
 <!--Main card section -->
 
-<?php include 'components/page_on_build.php'; ?>
+<?php include __DIR__ . '/components/page_on_build.php'; ?>
 
   <!-- Last modified-->
-  <?php include '../pages/components/last_modified.php'; ?>
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
   <!-- FOOTER -->
-  <?php include 'components/footer.php'; ?>
+  <?php include __DIR__ . '/components/footer.php'; ?>
   </main>
 
   <!-- Bootstrap JS -->

@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../includes/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +51,7 @@ button.project-info a:hover {
 </head>
 
 <body class="store-page">
-    <?php include 'components/nav-bar.php'; ?>
+    <?php include __DIR__ . '/components/nav-bar.php'; ?>
 
 <main class="store-main container py-4 py-lg-5">
 <section class="rur-page-section">
@@ -88,7 +89,7 @@ button.project-info a:hover {
   </div>
 
   <div class="col-12 text-center mt-3">
-    <button class="project-info"><a href="/ResearchUnitOfRoboticsWebPage-main-store-conekta-styled%20(1)/index.php">Go home</a></button>
+    <button class="project-info"><a href="<?= e(base_url('index.php')) ?>">Go home</a></button>
   </div>
     
 </div>
@@ -97,13 +98,13 @@ button.project-info a:hover {
 
 
 
-<?php include 'components/page_on_build.php'; ?>
+<?php include __DIR__ . '/components/page_on_build.php'; ?>
 
 
   <!-- Last modified-->
-  <?php include '../pages/components/last_modified.php'; ?>
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
   <!-- FOOTER -->
-  <?php include 'components/footer.php'; ?>
+  <?php include __DIR__ . '/components/footer.php'; ?>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

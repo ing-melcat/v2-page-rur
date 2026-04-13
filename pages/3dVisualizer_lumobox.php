@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../includes/bootstrap.php'; ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,15 +39,15 @@
 </head>
 
 <body class="p-5">
-    <?php include 'components/nav-bar.php'; ?>
+    <?php include __DIR__ . '/components/nav-bar.php'; ?>
     <div class="main-section">
         <h1 class="text-dark text-center m-4 fw-bold" style="font-family: 'Roboto';">Research Unit of Robotics</h1>
     <h4>Introducing LUMOBOX</h4>
     </div>
 
-    <?php include 'components/page_on_build.php'; ?>
+    <?php include __DIR__ . '/components/page_on_build.php'; ?>
 
-    <?php include 'components/footer.php'; ?>
+    <?php include __DIR__ . '/components/footer.php'; ?>
 
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
 </body>

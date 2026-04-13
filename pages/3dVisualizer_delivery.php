@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../includes/bootstrap.php'; ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +47,7 @@
 </head>
 
 <body class="p-5">
-    <?php include 'components/nav-bar.php'; ?>
+    <?php include __DIR__ . '/components/nav-bar.php'; ?>
     <div class="main-section w-100 mt-1" style="font-family: 'Roboto';">
         <h1 class="text-dark text-center m-4 fw-bold" style="font-family: 'Roboto';">Research Unit of Robotics</h1>
     <h4>Introducing Delivery BOT v1</h4>
@@ -54,7 +55,7 @@
     
     $glbPath = '../resources/assets/DeliveryBotv1.glb';
 
-    include 'components/3dVisualizer.php'; 
+    include __DIR__ . '/components/3dVisualizer.php'; 
     
     ?>
     </div>
@@ -90,7 +91,7 @@
         $page = "/pages/members.php";
         $section = "deliver-e";
         $link = $page . "#" . $section;
-    include "components/members_for_project_page.php"; ?>
+    include __DIR__ . "/components/members_for_project_page.php"; ?>
 
     <!-- Toast element -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -109,7 +110,7 @@
 
 <!--<?php include 'components/page_on_build.php'; ?>-->
 
-    <?php include 'components/footer.php'; ?>
+    <?php include __DIR__ . '/components/footer.php'; ?>
 
 <!--Toast Element script-->
     <script>

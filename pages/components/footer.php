@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <footer class=" text-light mt-auto pt-4 pb-2" style="background-color: #0f1424;">
   <div class="container">
     <div class="row">
@@ -35,7 +36,7 @@
     </div>
     <hr class="border-secondary">
     <p class="text-center text-white-50 small mb-0">
-      © 2025 Research Unit of Robotics · All rights reserved
+      (c) 2025 Research Unit of Robotics - All rights reserved
     </p>
 
   </div>
