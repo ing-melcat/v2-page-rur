@@ -10,7 +10,7 @@ function db_connection_config(): array
             return [
                 'host' => (string) $parts['host'],
                 'port' => isset($parts['port']) ? (string) $parts['port'] : '3306',
-                'name' => isset($parts['path']) ? ltrim((string) $parts['path'], '/') : 'rur_store',
+                'name' => isset($parts['path']) ? ltrim((string) $parts['path'], '/') : 'railway_v2',
                 'user' => isset($parts['user']) ? urldecode((string) $parts['user']) : 'root',
                 'pass' => isset($parts['pass']) ? urldecode((string) $parts['pass']) : '',
             ];
@@ -20,7 +20,7 @@ function db_connection_config(): array
     return [
         'host' => (string) env_first(['DB_HOST', 'MYSQLHOST', 'MYSQLHOSTPRIVATE'], '127.0.0.1'),
         'port' => (string) env_first(['DB_PORT', 'MYSQLPORT'], '3306'),
-        'name' => (string) env_first(['DB_NAME', 'MYSQLDATABASE'], 'rur_store'),
+        'name' => (string) env_first(['DB_NAME', 'MYSQLDATABASE'], 'railway_v2'),
         'user' => (string) env_first(['DB_USER', 'MYSQLUSER'], 'root'),
         'pass' => (string) env_first(['DB_PASS', 'MYSQLPASSWORD'], ''),
     ];
