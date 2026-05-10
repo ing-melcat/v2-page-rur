@@ -5,8 +5,8 @@ $navItems = $navItems ?? [];
 $filters = $filters ?? [];
 ?>
 <nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container page-categories">
-    <a class="navbar-brand fw-bold" style="font-family: 'Roboto';"><?= e($navTitle) ?></a>
+<div class="container">
+    <a class="navbar-brand fw-bold" style="font-family: 'Roboto';">&nbsp;</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#<?= e($navId) ?>" aria-controls="<?= e($navId) ?>" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

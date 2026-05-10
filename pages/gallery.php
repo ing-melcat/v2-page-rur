@@ -49,18 +49,6 @@
   </div>
 </section>
 
-<section class="rur-page-section">
-  <?php
-    $navItems = [
-      ['label' => 'Home', 'href' => base_url('index.php')],
-      ['label' => 'Team Members', 'href' => base_url('pages/members.php')],
-      ['label' => 'Projects', 'href' => base_url('pages/projects.php')],
-      ['label' => 'Galeria', 'href' => base_url('pages/gallery.php'), 'active' => true],
-      ['label' => 'Productos', 'href' => base_url('pages/product.php')],
-    ];
-  ?>
-  <?php include __DIR__ . '/components/page-nav.php'; ?>
-</section>
 
 <section class="rur-page-section">
 <div class="rur-panel">
