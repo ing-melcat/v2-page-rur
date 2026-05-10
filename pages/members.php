@@ -75,17 +75,7 @@
       color: #ecbf03;
     }
 
-    /* Change text color only for the category navbar */
-  .member-categories .navbar-nav .nav-link {
-    color: #0f1424;   /* Black text */
-  }
-
-  /* Optional: change color on hover */
-  .member-categories .navbar-nav .nav-link:hover {
-    color: #fff;   
-  }
-
-  #rassor-team{
+    #rassor-team{
     color: #ecbf03;
   }
 
@@ -159,6 +149,7 @@ button.project-info a:hover {
     <?php include __DIR__ . '/components/nav-bar.php'; ?>
     <!--NavBar section -->
 
+<main class="store-main">
 <div class="container py-4 py-lg-5">
   <section class="rur-page-section">
     <div class="rur-hero">
@@ -166,51 +157,33 @@ button.project-info a:hover {
         <div class="col-lg-8">
           <span class="rur-kicker mb-3">Members</span>
           <h1 class="rur-section-title mb-2">Research Unit of Robotics Members</h1>
-          <p class="rur-subtitle mb-0">La seccion de miembros ya abre con el mismo estilo visual que carrito, productos, compras recientes y facturas.</p>
-        </div>
-        <div class="col-lg-4">
-          <div class="rur-methods justify-content-lg-end">
-            <span class="rur-chip">Founders</span>
-            <span class="rur-chip">Teams</span>
-            <span class="rur-chip">Projects</span>
-          </div>
+          <p class="rur-subtitle mb-0">En esta seccion encontrarás la lista de miembros del grupo de investigación, con su información detallada de donde pertenecen mas su afinidad donde aportan a los proyectos.</p>
         </div>
       </div>
     </div>
   </section>
 </div>
 
-<nav class="navbar navbar-expand-lg navbar-light member-categories" style="background-color: #ecbf03;">
-  <div class="container">
-    <a class="navbar-brand fw-bold" style="font-family: 'Roboto';">CATEGORIES</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav" aria-controls="navbarNav" 
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-      <ul class="navbar-nav">
-        <!-- Section links -->
-        <li class="nav-item" data-status="active"><a class="nav-link fw-semibold" href="#founders">RUR FOUNDERS</a></li>
-        <li class="nav-item" data-status="active"><a class="nav-link fw-semibold" href="#unipolito">UNIPOLITO</a></li>
-        <li class="nav-item" data-status="active"><a class="nav-link fw-semibold" href="#deliver-e">DELIVER-E</a></li>
-        <li class="nav-item" data-status="active"><a class="nav-link fw-semibold" href="#umo">UMO AI</a></li>
-        <li class="nav-item" data-status="active"><a class="nav-link fw-semibold" href="#lumobox">LUMOBOX</a></li>
-        <li class="nav-item" data-status="active"><a class="nav-link fw-semibold" href="#rassor">ROVER RASSOR</a></li>
-        <li class="nav-item" data-status="active"><a class="nav-link fw-semibold" href="#line-fo">LINE FOLLOWER</a></li>
-        <li class="nav-item" data-status="finalized"><a class="nav-link fw-semibold" href="#page">WEB PAGE</a></li>
-
-        <!-- Filter controls -->
-        <li class="nav-item d-flex align-items-center ms-3">
-          <button class="filter-btn me-2" onclick="filterMenu('active', this)">Active</button>
-          <button class="filter-btn" onclick="filterMenu('finalized', this)">Finalized</button>
-          <button class="filter-btn ms-2" onclick="filterMenu('all', this)">All</button>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<?php
+$navItems = [
+  ['label' => 'RUR FOUNDERS', 'href' => '#founders', 'status' => 'active'],
+  ['label' => 'UNIPOLITO', 'href' => '#unipolito', 'status' => 'active'],
+  ['label' => 'DELIVER-E', 'href' => '#deliver-e', 'status' => 'active'],
+  ['label' => 'UMO AI', 'href' => '#umo', 'status' => 'active'],
+  ['label' => 'LUMOBOX', 'href' => '#lumobox', 'status' => 'active'],
+  ['label' => 'ROVER RASSOR', 'href' => '#rassor', 'status' => 'active'],
+  ['label' => 'LINE FOLLOWER', 'href' => '#line-fo', 'status' => 'active'],
+  ['label' => 'WEB PAGE', 'href' => '#page', 'status' => 'finalized'],
+];
+$filters = [
+  ['label' => 'Active', 'onclick' => "filterMenu('active', this)", 'active' => true],
+  ['label' => 'Finalized', 'onclick' => "filterMenu('finalized', this)"],
+  ['label' => 'All', 'onclick' => "filterMenu('all', this)"],
+];
+$navTitle = 'CATEGORIES';
+$navId = 'navbarMembers';
+include __DIR__ . '/components/page-nav.php';
+?>
 
 
 <!-- Floating Back to Top Button -->
@@ -824,8 +797,10 @@ button.project-info a:hover {
 
   <!-- Last modified-->
   <?php include __DIR__ . '/components/last_modified.php'; ?>
-  <!-- FOOTER -->
-  <?php include __DIR__ . '/components/footer.php'; ?>
+</main>
+
+<!-- FOOTER -->
+<?php include __DIR__ . '/components/footer.php'; ?>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -843,25 +818,6 @@ button.project-info a:hover {
   document.getElementById("backToTopBtn").onclick = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-</script>
-
-<script>
-function filterMenu(status, btn) {
-  const items = document.querySelectorAll('.navbar-nav .nav-item[data-status]');
-  items.forEach(item => {
-    if (status === 'all' || item.dataset.status === status) {
-      item.style.display = 'block';
-    } else {
-      item.style.display = 'none';
-    }
-  });
-
-  // Highlight the active filter button
-  document.querySelectorAll('.filter-btn').forEach(button => {
-    button.classList.remove('active-filter');
-  });
-  btn.classList.add('active-filter');
-}
 </script>
 
 

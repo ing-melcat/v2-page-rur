@@ -9,7 +9,7 @@ if (is_logged_in()) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro | RUR Store</title>
+  <title>Registro | Research Unit of Robotics</title>
   <link rel="icon" type="image/png" href="<?= e(base_url('resources/RUR_logo_white.png')) ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -25,21 +25,21 @@ if (is_logged_in()) {
         <div class="col-lg-6 order-lg-2">
           <div class="rur-auth-side h-100 d-flex flex-column justify-content-between">
             <div>
-              <span class="rur-kicker mb-3">Registro de cliente</span>
-              <h1 class="rur-display-title mb-3">Crea tu cuenta y abre la tienda privada.</h1>
-              <p class="rur-subtitle mb-4">Después del registro podrás entrar al catálogo, usar carrito, generar compras recientes, ticket y solicitud de factura, todo bajo el mismo flujo protegido.</p>
+              <span class="rur-kicker mb-3">Registro de miembro</span>
+              <h1 class="rur-display-title mb-3">Crea tu cuenta para acceder a contenido exclusivo.</h1>
+              <p class="rur-subtitle mb-4">Después del registro podrás explorar los recursos de RUR, acceder a información de equipos y proyectos, y usar el área privada de miembros.</p>
 
               <div class="row g-3">
                 <div class="col-sm-6">
                   <div class="rur-mini-stat">
                     <span class="rur-stat-value">1 cuenta</span>
-                    <span class="rur-stat-label">Acceso a productos y pagos</span>
+                    <span class="rur-stat-label">Acceso a miembros y proyectos</span>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="rur-mini-stat">
-                    <span class="rur-stat-value">1 carrito</span>
-                    <span class="rur-stat-label">Resumen vivo desde el header</span>
+                    <span class="rur-stat-value">Área privada</span>
+                    <span class="rur-stat-label">Contenidos solo para usuarios</span>
                   </div>
                 </div>
               </div>
@@ -53,7 +53,7 @@ if (is_logged_in()) {
                 </div>
                 <div class="rur-feature-item">
                   <span class="rur-feature-bullet">✓</span>
-                  <p class="rur-feature-text">Flujo listo para checkout hospedado con Conekta.</p>
+                  <p class="rur-feature-text">Acceso seguro a contenido exclusivo de RUR.</p>
                 </div>
               </div>
               <img src="<?= e(base_url('resources/projects1.jpeg')) ?>" alt="RUR projects">

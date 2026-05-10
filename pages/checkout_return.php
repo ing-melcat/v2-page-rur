@@ -4,70 +4,16 @@ require_login(false);
 
 $userId = (int) current_user()['id'];
 $localOrderId = (int) ($_GET['local_order_id'] ?? 0);
-$status = (string) ($_GET['status'] ?? 'unknown');
-$providerOrderId = (string) ($_GET['order_id'] ?? '');
 $order = null;
-$message = null;
-$messageType = 'secondary';
+$message = 'La pasarela de pagos está deshabilitada. No se procesará ningún checkout.';
+$messageType = 'warning';
 
 if ($localOrderId > 0) {
     $order = get_order_by_id($localOrderId, $userId);
-}
-
-if (!$order && $providerOrderId !== '') {
-    $providerOrder = null;
-
-    try {
-        $providerOrder = conekta_get_order($providerOrderId);
-    } catch (Throwable $ignored) {
+    if ($order) {
+        $message = 'Orden encontrada. Este sitio no utiliza actualmente una pasarela de pagos.';
+        $messageType = 'info';
     }
-
-    if (is_array($providerOrder)) {
-        if (!empty($providerOrder['metadata']['local_order_id'])) {
-            $localOrderId = (int) $providerOrder['metadata']['local_order_id'];
-            if ($localOrderId > 0) {
-                $order = get_order_by_id($localOrderId, $userId);
-            }
-        }
-
-        if (!$order) {
-            $order = find_local_order_by_provider_order_id($providerOrderId);
-            if ($order && (int) $order['user_id'] !== $userId) {
-                $order = null;
-            }
-        }
-    }
-}
-
-if ($order && !empty($order['payment_provider_order_id'])) {
-    try {
-        $providerOrder = conekta_get_order((string) $order['payment_provider_order_id']);
-        $paymentStatus = (string) ($providerOrder['payment_status'] ?? 'pending_payment');
-
-        if ($paymentStatus === 'paid') {
-            finalize_paid_order((int) $order['id'], $providerOrder);
-            clear_cart($userId);
-            $order = get_order_by_id((int) $order['id'], $userId);
-            $message = 'Pago confirmado correctamente. Tu ticket ya esta disponible.';
-            $messageType = 'success';
-        } elseif (in_array($paymentStatus, ['declined', 'failed'], true)) {
-            mark_order_status((int) $order['id'], 'declined', $paymentStatus, $providerOrder);
-            $order = get_order_by_id((int) $order['id'], $userId);
-            $message = 'El pago fue rechazado por Conekta.';
-            $messageType = 'danger';
-        } else {
-            mark_order_status((int) $order['id'], 'pending_payment', $paymentStatus, $providerOrder);
-            $order = get_order_by_id((int) $order['id'], $userId);
-            $message = 'La orden sigue pendiente. Si configuraste webhook, el estado se actualizara en cuanto Conekta confirme el pago.';
-            $messageType = 'warning';
-        }
-    } catch (Throwable $e) {
-        $message = 'No se pudo consultar el estado real en Conekta: ' . $e->getMessage();
-        $messageType = 'warning';
-    }
-} else {
-    $message = 'No se encontro la orden local asociada al retorno del checkout.';
-    $messageType = 'danger';
 }
 ?>
 <!DOCTYPE html>
@@ -105,22 +51,33 @@ if ($order && !empty($order['payment_provider_order_id'])) {
     </section>
 
     <section class="rur-page-section">
+      <?php
+        $navItems = [
+          ['label' => 'Productos', 'href' => base_url('pages/product.php')],
+          ['label' => 'Carrito', 'href' => base_url('pages/cart.php')],
+          ['label' => 'Compras recientes', 'href' => base_url('pages/purchases.php')],
+          ['label' => 'Facturas', 'href' => base_url('pages/invoices.php')],
+          ['label' => 'Resultado', 'href' => '#', 'active' => true],
+        ];
+      ?>
+      <?php include __DIR__ . '/components/page-nav.php'; ?>
+    </section>
+
+    <section class="rur-page-section">
       <div class="row justify-content-center">
         <div class="col-lg-8">
           <div class="rur-status-card">
-            <span class="rur-kicker">Confirmacion</span>
-            <h2 class="h3 fw-bold mt-3 mb-3">Estado actualizado</h2>
+            <span class="rur-kicker">Confirmación</span>
+            <h2 class="h3 fw-bold mt-3 mb-3">Pasarela deshabilitada</h2>
             <div class="alert alert-<?= e($messageType) ?> rounded-4"><?= e($message ?? 'Sin novedades.') ?></div>
             <?php if ($order): ?>
               <div class="rur-login-note mb-4">
                 <div><strong>Orden:</strong> <?= e($order['order_number']) ?></div>
                 <div><strong>Estado local:</strong> <?= e($order['status']) ?></div>
-                <div><strong>Estado de pago:</strong> <?= e($order['payment_status']) ?></div>
                 <div><strong>Total:</strong> <?= e(money_format_mx((float) $order['total_amount'])) ?></div>
               </div>
               <div class="d-flex gap-2 flex-wrap">
                 <a class="btn rur-btn-dark" href="<?= e(base_url('pages/purchases.php')) ?>">Ver compras</a>
-                <a class="btn rur-btn-outline" href="<?= e(base_url('pages/ticket.php?order_id=' . (int) $order['id'])) ?>">Abrir ticket</a>
                 <a class="btn rur-btn-outline" href="<?= e(base_url('pages/product.php')) ?>">Volver a productos</a>
               </div>
             <?php endif; ?>
@@ -129,6 +86,10 @@ if ($order && !empty($order['payment_provider_order_id'])) {
       </div>
     </section>
   </main>
+
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
+
+  <?php include __DIR__ . '/components/footer.php'; ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

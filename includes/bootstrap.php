@@ -31,6 +31,7 @@ date_default_timezone_set((string) env('APP_TIMEZONE', 'America/Mexico_City'));
 require_once PROJECT_ROOT . '/includes/helpers.php';
 require_once PROJECT_ROOT . '/includes/db.php';
 require_once PROJECT_ROOT . '/includes/auth.php';
-require_once PROJECT_ROOT . '/includes/conekta.php';
+// Conekta payment gateway disabled. Backup copy preserved in backup-payment-gateway/includes/conekta.php
+// require_once PROJECT_ROOT . '/includes/conekta.php';
 require_once PROJECT_ROOT . '/includes/facturama.php';
 require_once PROJECT_ROOT . '/includes/purchases.php';

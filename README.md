@@ -1,13 +1,11 @@
 # Research Unit of Robotics Web Page + Store + Conekta
 
-Este proyecto quedó extendido con una zona privada de tienda en PHP/MySQL para XAMPP o hosting PHP tradicional.
+Este proyecto quedo extendido con una tienda en PHP/MySQL para XAMPP o hosting PHP tradicional.
 
 ## Lo que ya trae
 
-- Login y registro.
-- Productos protegidos por sesión.
+- Catalogo de productos.
 - API de carrito.
-- Header con badge y mini-carrito.
 - Compras recientes.
 - Ticket imprimible.
 - Solicitud de factura.
@@ -21,10 +19,7 @@ Importa este archivo en MySQL:
 
 - `database/rur_store.sql`
 
-Credenciales demo sembradas:
-
-- Admin: `[email protected]` / `admin123`
-- Cliente: `[email protected]` / `cliente123`
+El login y registro estan respaldados en `backup-login-auth/` por si se quieren reactivar despues.
 
 ## Variables `.env`
 

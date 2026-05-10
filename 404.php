@@ -68,6 +68,8 @@
       <?php include 'pages/components/404_component.php'; ?>
     </div>
   </section>
+
+  <?php include 'pages/components/footer.php'; ?>
 </main>
 
 

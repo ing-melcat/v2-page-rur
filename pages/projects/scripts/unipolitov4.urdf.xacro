@@ -1,0 +1,607 @@
+<?xml version="1.0"?>
+
+<robot name="unipolito4" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:arg name="is_ignition" default="true"/>
+
+    <!-- Include Gazebo Parameters-->
+    <xacro:include filename="$(find unipolitov4_description)/urdf/unipolitov4_gazebo.xacro" />
+
+    <!-- ROS 2 Control-->
+    <xacro:include filename="$(find unipolitov4_description)/urdf/unipolitov4_ros2_control.xacro" />
+
+<!-- This is the second version of the model for the simulation of 
+     the UNIPOLITO V4 - Now including collisions and innertia! - Charly -->
+
+<!-- 
+             .__              .__  .__  __                   _____    
+ __ __  ____ |__|_____   ____ |  | |__|/  |_  ____   ___  __/  |  |   
+|  |  \/    \|  \____ \ /  _ \|  | |  \   __\/  _ \  \  \/ /   |  |_  
+|  |  /   |  \  |  |_> >  <_> )  |_|  ||  | (  <_> )  \   /    ^   /  
+|____/|___|  /__|   __/ \____/|____/__||__|  \____/    \_/\____   |   
+           \/   |__|                                           |__|   
+                                     .___     .__                     
+                    _____   ____   __| _/____ |  |                    
+  ______   ______  /     \ /  _ \ / __ |/ __ \|  |    ______   ______ 
+ /_____/  /_____/ |  Y Y  (  <_> ) /_/ \  ___/|  |__ /_____/  /_____/ 
+                  |__|_|  /\____/\____ |\___  >____/                  
+                        \/            \/    \/                        
+___.                                     __          _______          
+\_ |__ ___.__.           _______   _____/  |________ \   _  \         
+ | __ <   |  |    ______ \_  __ \_/ __ \   __\_  __ \/  /_\  \        
+ | \_\ \___  |   /_____/  |  | \/\  ___/|  |  |  | \/\  \_/   \       
+ |___  / ____|            |__|    \___  >__|  |__|    \_____  /       
+     \/\/                             \/                    \/              
+-->
+    <!-- wheels properties-->
+    <xacro:property name="wheel_radius" value="0.1" />
+    <xacro:property name="wheel_length" value="0.1"/>
+
+    <!-- Aarm base properties-->
+    <xacro:property name="arm_base_x" value="0.3"/>
+    <xacro:property name="arm_base_height" value="0.05"/>
+
+    <!-- base link properties-->
+    <xacro:property name="base_link_x" value="0.6"/>
+    <xacro:property name="base_link_height" value="0.2"/>
+    <xacro:property name="base_link_y" value="0.4"/>
+
+    <!-- Tower link properties-->
+     <xacro:property name="tower_link_x" value="0.15"/>
+     <xacro:property name="tower_link_length" value="0.3"/>
+    
+     <!-- drone zone link properties-->
+     <xacro:property name="drone_zone_link_x" value="0.2"/>
+     <xacro:property name="drone_zone_link_x" value="0.3"/>
+     <xacro:property name="drone_zone_link_length" value="0.2"/>
+
+    <!-- revolute link 1 properties-->
+    <xacro:property name="revolute_link1_length" value="0.1"/>
+
+    <!-- Arm link1 properties -->
+     <xacro:property name="arm_link1_dimention" value="0.06"/>
+    
+     <!-- Arm link2 properties -->
+     <xacro:property name="arm_link2_x" value="0.06"/>
+     <xacro:property name="arm_link2_z" value="0.06"/>
+     <xacro:property name="arm_link2_y" value="0.25"/>
+
+     <!-- revolute link 2 & 3 properties-->
+    <xacro:property name="revolute_link2_length" value="0.05"/>
+
+    <!-- Casther wheels properties-->
+     <xacro:property name="casther_radius" value="${wheel_radius/2}"/>
+
+    <!-- Materials definition-->
+    <material name="green">
+        <color rgba="0 0.5 0 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0 0 1 1"/>
+    </material>
+
+    <material name="red">
+        <color rgba="1 0 0 1"/>
+    </material>
+
+    <material name="purple">
+        <color rgba="0.29 0.0 0.51 1.0"/>
+    </material>
+    <!-- Materials definition-->
+
+    <link name="base_footprint"/>
+
+    <joint name="base_footprint_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Base link -->
+     <!-- 
+    <link name="base_link">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="8.2573504e-01"/>
+            <inertia ixx="2.2124416e-02" ixy="-1.2294101e-04" ixz="3.4938785e-04"
+                    iyy="2.1193702e-02" iyz="-5.0120904e-05"
+                    izz="2.0064271e-02" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="${base_link_x} ${base_link_y} ${base_link_height}" />
+            </geometry>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${base_link_x} ${base_link_y} ${base_link_height}" />
+            </geometry>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+        </collision>
+    </link>
+    -->
+
+    <link name="base_link">
+        <inertial>
+            <origin xyz="0 0 0.1" rpy="0 0 0" />
+            <mass value="2.0"/> <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.07" iyz="0" izz="0.09" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="${base_link_x} ${base_link_y} ${base_link_height}" />
+            </geometry>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${base_link_x} ${base_link_y} ${base_link_height}" />
+            </geometry>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <!-- Tower link-->
+     <link name="tower_link">
+        <inertial>
+        <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+        <mass value="0.0001"/>
+        <inertia ixx="0.00001" ixy="0.0" ixz="0.0"
+                iyy="0.00001" iyz="0.0"
+                izz="0.00001" />
+    </inertial>
+        <visual>
+            <geometry>
+                <box size="${tower_link_x} ${tower_link_x} ${tower_link_length}"/>
+            </geometry>
+            <origin xyz="0 0 ${tower_link_length/2}" rpy="0 0 0" />
+            <material name="green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${tower_link_x} ${tower_link_x} ${tower_link_length}"/>
+            </geometry>
+            <origin xyz="0 0 ${tower_link_length/2}" rpy="0 0 0" />
+        </collision>
+     </link>
+
+     <!-- Drone zone link-->
+      <link name="drone_zone_link">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="8.2573504e-01"/>
+            <inertia ixx="2.2124416e-02" ixy="-1.2294101e-04" ixz="3.4938785e-04"
+                    iyy="2.1193702e-02" iyz="-5.0120904e-05"
+                    izz="2.0064271e-02" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="${drone_zone_link_x} ${drone_zone_link_x} ${drone_zone_link_length}"/>
+            </geometry>
+            <origin xyz="0 0 ${drone_zone_link_length/2}" rpy="0 0 0" />
+            <material name="green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${drone_zone_link_x} ${drone_zone_link_x} ${drone_zone_link_length}"/>
+            </geometry>
+            <origin xyz="0 0 ${drone_zone_link_length/2}" rpy="0 0 0" />
+        </collision>
+     </link>
+
+    <!-- 
+    <link name="second_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.2"/>
+            </geometry>
+            <origin xyz="0 0 0.1" rpy="0 0 0"/>
+            <material name="blue"/>
+        </visual>
+    </link>
+    -->
+
+    <!-- Left wheel link-->
+    <link name="left_wheel_link">
+        <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <mass value="0.5"/>
+    <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+            </geometry>
+            <origin xyz="0 -${wheel_radius/2} 0" rpy="1.57 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+            </geometry>
+            <origin xyz="0 -${wheel_radius/2} 0" rpy="1.57 0 0"/>
+        </collision>
+    </link>
+
+      <!-- Right wheel link-->
+    <link name="right_wheel_link">
+        <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <mass value="0.5"/>
+    <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+            </geometry>
+            <origin xyz="0 ${wheel_radius/2} 0" rpy="1.57 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+            </geometry>
+            <origin xyz="0 ${wheel_radius/2} 0" rpy="1.57 0 0"/>
+        </collision>
+    </link>
+    
+    <!--
+    <joint name="base_second_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="second_link"/>
+        <origin xyz="0 0 0.2" rpy="0 0 0" />
+    </joint>
+     -->
+
+    <!-- arm base link-->
+     <link name="arm_base_link">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="${arm_base_x} 0.4 ${arm_base_height}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${arm_base_x} 0.4 ${arm_base_height}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <!-- Revolute link arm 1-->
+     <link name="rev_arm_link1">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius="${revolute_link1_length/2}" length="${revolute_link1_length/3}"/>
+            </geometry>
+            <origin xyz="0 0 ${revolute_link1_length/6}" rpy="0 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${revolute_link1_length/2}" length="${revolute_link1_length/3}"/>
+            </geometry>
+            <origin xyz="0 0 ${revolute_link1_length/6}" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <!-- link arm 1-->
+     <link name="arm_link1">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+           <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="${arm_link1_dimention} ${arm_link1_dimention} ${arm_link1_dimention}" />
+            </geometry>
+            <origin xyz="0 0 ${revolute_link1_length/3}" rpy="0 0 0"/>
+            <material name="purple"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${arm_link1_dimention} ${arm_link1_dimention} ${arm_link1_dimention}" />
+            </geometry>
+            <origin xyz="0 0 ${revolute_link1_length/3}" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <!-- link arm 2-->
+     <link name="arm_link2">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="${arm_link2_x} ${arm_link2_y} ${arm_link2_z}" />
+            </geometry>
+            <origin xyz="0 0 ${arm_link2_z+revolute_link2_length}" rpy="1.57 0 0"/>
+            <material name="purple"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${arm_link2_x} ${arm_link2_y} ${arm_link2_z}" />
+            </geometry>
+            <origin xyz="0 0 ${arm_link2_z+revolute_link2_length}" rpy="1.57 0 0"/>
+        </collision>
+    </link>
+
+    <!-- link arm 3-->
+     <link name="arm_link3">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="${arm_link2_x} ${arm_link2_y} ${arm_link2_z}" />
+            </geometry>
+            <origin xyz="0 0 ${arm_link2_z+revolute_link2_length}" rpy="1.57 0 0"/>
+            <material name="purple"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="${arm_link2_x} ${arm_link2_y} ${arm_link2_z}" />
+            </geometry>
+            <origin xyz="0 0 ${arm_link2_z+revolute_link2_length}" rpy="1.57 0 0"/>
+        </collision>
+    </link>
+
+    <!-- Casther wheel 1 - right-->
+     <link name="casther_wheel_link1">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="8.2573504e-01"/>
+            <inertia ixx="2.2124416e-02" ixy="-1.2294101e-04" ixz="3.4938785e-04"
+                    iyy="2.1193702e-02" iyz="-5.0120904e-05"
+                    izz="2.0064271e-02" />
+        </inertial>
+        <visual>
+            <geometry>
+                <sphere radius="${casther_radius}" /> 
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${casther_radius}" /> 
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+     </link>
+
+     <!-- Casther wheel 2 - left-->
+     <link name="casther_wheel_link2">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="8.2573504e-01"/>
+            <inertia ixx="2.2124416e-02" ixy="-1.2294101e-04" ixz="3.4938785e-04"
+                    iyy="2.1193702e-02" iyz="-5.0120904e-05"
+                    izz="2.0064271e-02" />
+        </inertial>
+        <visual>
+            <geometry>
+                <sphere radius="${casther_radius}" /> 
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${casther_radius}" /> 
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+     </link>
+
+     <!-- Casther wheel 3 - arm-->
+     <link name="casther_wheel_link3">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <sphere radius="${casther_radius}" /> 
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${casther_radius}" /> 
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+     </link>
+
+     <!-- Revolute link arm 2-->
+    <link name="rev_arm_link2">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius="${revolute_link2_length/2}" length="${revolute_link2_length/3}"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${revolute_link2_length/2}" length="${revolute_link2_length/3}"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+        </collision>
+    </link>
+
+    <!-- Revolute link arm 3-->
+    <link name="rev_arm_link3">
+        <inertial>
+            <origin xyz="0 0 0.04" rpy="0.0 0.25 0.3" />
+            <mass value="0.2"/>
+            <inertia ixx="0.005354" ixy="-0.000029" ixz="0.000084"
+                    iyy="0.005128" iyz="-0.000012"
+                    izz="0.004855" />
+        </inertial>
+        <visual>
+            <geometry>
+                <cylinder radius="${revolute_link2_length/2}" length="${revolute_link2_length/3}"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${revolute_link2_length/2}" length="${revolute_link2_length/3}"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="1.57 0 0"/>
+        </collision>
+    </link>
+
+     <!-- Left wheel joint-->
+    <joint name="base_left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel_link"/>
+        <origin xyz="-0.15 -0.25 0" rpy="0 0 0" />
+        <axis xyz="0 1 0"/>
+        <limit velocity="100.0" effort="100.0"/>
+    </joint>
+
+     <!-- Right wheel joint-->
+    <joint name="base_right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel_link"/>
+        <origin xyz="-0.15 0.25 0" rpy="0 0 0" />
+        <axis xyz="0 1 0"/>
+        <limit velocity="100" effort="100"/>
+    </joint>
+
+    <!-- arm base joint-->
+    <joint name="base_arm_base_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="arm_base_link"/>
+        <origin xyz="${(base_link_x/2)+arm_base_x/2} 0 ${arm_base_height/2}" rpy="0 0 0" />
+    </joint>
+
+    <!-- tower base joint-->
+    <joint name="base_tower_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="tower_link"/>
+        <origin xyz="${base_link_x/4} ${base_link_y/4} ${base_link_height}" rpy="0 0 0" />
+    </joint>
+
+    <!-- drone zone base joint-->
+    <joint name="base_drone_zone_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="drone_zone_link"/>
+        <origin xyz="-${base_link_x/6} 0 ${base_link_height}" rpy="0 0 0" />
+    </joint>
+
+    <!-- Revolute link arm 1-->
+    <joint name="arm_base_rev_link1" type="revolute">
+        <parent link="arm_base_link"/>
+        <child link="rev_arm_link1"/>
+        <origin xyz="0 0 ${arm_base_height/2}" rpy="0 0 0" />
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="1.57" velocity="100" effort="100"/>
+        <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
+    <!-- arm link 1-->
+    <joint name="revolute_link_arm_link1_joint" type="fixed">
+        <parent link="rev_arm_link1"/>
+        <child link="arm_link1"/>
+        <origin xyz="0 0 ${arm_link1_dimention/2}" rpy="0 0 0" />
+    </joint>
+
+     <!-- arm link 2-->
+    <joint name="revolute_link_arm_link2_joint" type="fixed">
+        <parent link="rev_arm_link2"/>
+        <child link="arm_link2"/>
+        <origin xyz="0 0 ${arm_link2_z/2}" rpy="0 0 0" />
+    </joint>
+
+    <!-- arm link 3-->
+    <joint name="revolute_link_arm_link3_joint" type="fixed">
+        <parent link="rev_arm_link3"/>
+        <child link="arm_link3"/>
+        <origin xyz="0 0 ${arm_link2_z/2}" rpy="0 0 0" />
+    </joint>
+
+    <!-- Revolute link arm 2-->
+    <joint name="arm_base_rev_link2" type="revolute">
+        <parent link="arm_link1"/>
+        <child link="rev_arm_link2"/>
+        <origin xyz="0 0 ${arm_link1_dimention+0.01}" rpy="0 0 0" />
+        <axis xyz="0 1 0"/>
+        <limit lower="-1" upper="1.57" velocity="100" effort="100"/>
+        <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
+    <!-- Revolute link arm 3-->
+    <joint name="arm_base_rev_link3" type="revolute">
+        <parent link="arm_link2"/>
+        <child link="rev_arm_link3"/>
+        <origin xyz="0 0 0.25" rpy="0 0 0" />
+        <axis xyz="0 1 0"/>
+        <limit lower="-1.57" upper="1.57" velocity="100" effort="100"/>
+        <dynamics damping="0.7" friction="1.0"/>
+    </joint>
+
+    <!-- casther wheel joint 1 - right-->
+     <joint name="base_casther_wheel_joint1" type="fixed">
+        <parent link="base_link" />
+        <child link="casther_wheel_link1"/>
+        <origin xyz="${base_link_x/2} -${base_link_y/2-0.08} -${base_link_height/2-casther_radius}" rpy="0 0 0" />
+     </joint>
+
+     <!-- casther wheel joint 2 - left -->
+     <joint name="base_casther_wheel_joint2" type="fixed">
+        <parent link="base_link" />
+        <child link="casther_wheel_link2"/>
+        <origin xyz="${base_link_x/2} ${base_link_y/2-0.08} -${base_link_height/2-casther_radius}" rpy="0 0 0" />
+     </joint>
+
+     <!-- casther wheel joint 3 - arm -->
+     <joint name="arm_casther_wheel_joint3" type="fixed">
+        <parent link="arm_link3" />
+        <child link="casther_wheel_link3"/>
+        <origin xyz="0 0 ${arm_link2_z*2+0.15}" rpy="0 0 0" />
+     </joint>
+</robot>

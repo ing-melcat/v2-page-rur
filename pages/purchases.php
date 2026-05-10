@@ -34,6 +34,18 @@ $orders = get_user_orders((int) current_user()['id']);
     </section>
 
     <section class="rur-page-section">
+      <?php
+        $navItems = [
+          ['label' => 'Productos', 'href' => base_url('pages/product.php')],
+          ['label' => 'Carrito', 'href' => base_url('pages/cart.php')],
+          ['label' => 'Compras recientes', 'href' => base_url('pages/purchases.php'), 'active' => true],
+          ['label' => 'Facturas', 'href' => base_url('pages/invoices.php')],
+        ];
+      ?>
+      <?php include __DIR__ . '/components/page-nav.php'; ?>
+    </section>
+
+    <section class="rur-page-section">
       <div class="rur-panel">
         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
           <div>
@@ -92,6 +104,10 @@ $orders = get_user_orders((int) current_user()['id']);
       </div>
     </section>
   </main>
+
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
+
+  <?php include __DIR__ . '/components/footer.php'; ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

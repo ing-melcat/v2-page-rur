@@ -1,62 +1,62 @@
 <?php require_once __DIR__ . '/../includes/bootstrap.php'; ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Unit of Robotics</title>
-    <link rel="icon" type="image/png" href="../resources/RUR_logo_white.png">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #fff;
-        }
-
-        .model-container {
-            height: 500px;
-            width: 700px;
-        }
-
-        model-viewer {
-            height: 100%;
-            width: 100%;
-        }
-        .main-section{
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UMO AI | Research Unit of Robotics</title>
+  <link rel="icon" type="image/png" href="<?= e(base_url('resources/RUR_logo_white.png')) ?>">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="<?= e(base_url('styles/bootstrap.min.css')) ?>" rel="stylesheet">
+  <link href="<?= e(base_url('styles/style.css')) ?>" rel="stylesheet">
 </head>
 
-<body class="p-5">
-    <?php include __DIR__ . '/components/nav-bar.php'; ?>
-    <div class="main-section">
-        <h1 class="text-dark text-center m-4 fw-bold" style="font-family: 'Roboto';">Research Unit of Robotics</h1>
-    <h4>Introducing UMO AI</h4>
-    <?php 
-    
-    $glbPath = '../resources/assets/BMO.glb';
+<body class="store-page">
+  <?php include __DIR__ . '/components/nav-bar.php'; ?>
 
-    include __DIR__ . '/components/3dVisualizer.php'; 
-    
-    ?>
-    </div>
+  <main class="store-main container py-4 py-lg-5">
+    <section class="rur-page-section">
+      <div class="rur-hero">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-8">
+            <span class="rur-kicker mb-3">Project Viewer</span>
+            <h1 class="rur-section-title mb-2">UMO AI</h1>
+            <p class="rur-subtitle mb-0">Interactive 3D preview for the UMO AI platform and its robotic design exploration.</p>
+          </div>
+          <div class="col-lg-4">
+            <div class="rur-methods justify-content-lg-end">
+              <span class="rur-chip">AI</span>
+              <span class="rur-chip">3D Model</span>
+              <span class="rur-chip">Robotics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <?php include __DIR__ . '/components/page_on_build.php'; ?>
+    <section class="rur-page-section">
+      <div class="rur-panel">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <?php
+              $glbPath = base_url('resources/assets/BMO.glb');
+              include __DIR__ . '/components/3dVisualizer.php';
+            ?>
+          </div>
+          <div class="col-lg-5">
+            <span class="rur-kicker mb-3">Introducing</span>
+            <h2 class="rur-section-title mb-3">UMO AI</h2>
+            <p class="rur-subtitle mb-0">Explore the model with orbit controls while keeping the page aligned with the RUR visual style.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <?php include __DIR__ . '/components/footer.php'; ?>
+  </main>
 
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"></script>
 </body>
-
 </html>

@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
-require_login(false);
 $products = get_products(true);
 $methods = array_values(array_filter(array_map('trim', explode(',', (string) env('CONEKTA_ALLOWED_PAYMENT_METHODS', 'card,cash,bank_transfer')))));
 ?>
@@ -22,6 +21,15 @@ $methods = array_values(array_filter(array_map('trim', explode(',', (string) env
   <main class="store-main container py-4 py-lg-5">
     <section class="rur-page-section">
       
+    </section>
+
+    <section class="rur-page-section">
+      <?php
+        $navItems = [
+          ['label' => 'Productos', 'href' => base_url('pages/product.php'), 'active' => true],
+        ];
+      ?>
+      <?php include __DIR__ . '/components/page-nav.php'; ?>
     </section>
 
     <section class="rur-page-section">
@@ -51,7 +59,7 @@ $methods = array_values(array_filter(array_map('trim', explode(',', (string) env
                       <p class="text-muted mb-3 flex-grow-1"><?= e($product['description']) ?></p>
                       <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
                         <span class="rur-stock-pill">Stock: <?= (int) $product['stock'] ?></span>
-                        <button class="btn rur-btn-dark add-to-cart" data-product-id="<?= (int) $product['id'] ?>">Agregar al carrito</button>
+                        <button class="btn rur-btn-dark" type="button" disabled>Carrito deshabilitado</button>
                       </div>
                     </div>
                   </div>
@@ -66,30 +74,10 @@ $methods = array_values(array_filter(array_map('trim', explode(',', (string) env
     </section>
   </main>
 
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
+
   <?php include __DIR__ . '/components/footer.php'; ?>
 
-  <script src="<?= e(base_url('assets/js/store-api.js')) ?>"></script>
-  <script>
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-      button.addEventListener('click', async () => {
-        const box = document.getElementById('storeMessage');
-        box.innerHTML = '';
-        button.disabled = true;
-        try {
-          const data = await StoreApi.post('<?= e(base_url('api/cart/add.php')) ?>', {
-            product_id: Number(button.dataset.productId),
-            quantity: 1,
-          });
-          if (typeof refreshMiniCart === 'function') refreshMiniCart();
-          box.innerHTML = `<div class="alert alert-success rounded-4">${data.message}</div>`;
-        } catch (error) {
-          box.innerHTML = `<div class="alert alert-danger rounded-4">${error.message}</div>`;
-        } finally {
-          button.disabled = false;
-        }
-      });
-    });
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

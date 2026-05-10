@@ -36,6 +36,18 @@ $methods = array_values(array_filter(array_map('trim', explode(',', (string) env
     </section>
 
     <section class="rur-page-section">
+      <?php
+        $navItems = [
+          ['label' => 'Productos', 'href' => base_url('pages/product.php')],
+          ['label' => 'Carrito', 'href' => base_url('pages/cart.php'), 'active' => true],
+          ['label' => 'Compras recientes', 'href' => base_url('pages/purchases.php')],
+          ['label' => 'Facturas', 'href' => base_url('pages/invoices.php')],
+        ];
+      ?>
+      <?php include __DIR__ . '/components/page-nav.php'; ?>
+    </section>
+
+    <section class="rur-page-section">
       <div id="cartMessage"></div>
       <div class="row g-4 align-items-start">
         <div class="col-lg-8">
@@ -92,33 +104,28 @@ $methods = array_values(array_filter(array_map('trim', explode(',', (string) env
         <div class="col-lg-4">
           <div class="rur-status-card mb-4">
             <span class="rur-kicker">Resumen</span>
-            <h2 class="h3 fw-bold mt-3 mb-3">Antes de pagar</h2>
+            <h2 class="h3 fw-bold mt-3 mb-3">Estado del carrito</h2>
             <div class="d-flex justify-content-between mb-2"><span>Productos</span><strong id="summaryCount"><?= (int) $summary['count'] ?></strong></div>
             <div class="d-flex justify-content-between mb-3"><span>Subtotal</span><strong id="summarySubtotal"><?= e(money_format_mx((float) $summary['subtotal'])) ?></strong></div>
             <div class="rur-divider"></div>
             <div class="mb-3">
-              <div class="fw-semibold mb-2">Métodos disponibles en Conekta</div>
-              <div class="rur-methods">
-                <?php foreach ($methods as $method): ?>
-                  <span class="rur-chip"><?= e($method) ?></span>
-                <?php endforeach; ?>
-              </div>
+              <div class="fw-semibold mb-2">Pasarela de pagos</div>
+              <div class="alert alert-warning rounded-4 mb-3">La pasarela de pagos actualmente está deshabilitada. El carrito se puede seguir usando, pero no hay checkout activo.</div>
             </div>
             <div class="rur-login-note mb-3">
-              <strong>Importante:</strong> el stock se descuenta cuando la orden queda pagada o cuando el webhook confirme el pago.
+              <strong>Nota:</strong> el stock solo se descuenta cuando completes manualmente la orden o cuando se implemente nuevamente un pago.
             </div>
             <div class="d-grid gap-2">
-              <button id="payButton" class="btn rur-btn-primary" <?= empty($summary['items']) || !conekta_enabled() ? 'disabled' : '' ?>>Pagar con Conekta</button>
+              <button id="payButton" class="btn rur-btn-primary" disabled>Checkout deshabilitado</button>
               <a class="btn rur-btn-outline" href="<?= e(base_url('pages/purchases.php')) ?>">Ver compras recientes</a>
             </div>
-            <?php if (!conekta_enabled()): ?>
-              <div class="alert alert-warning rounded-4 mt-3 mb-0">Falta configurar <code>CONEKTA_PRIVATE_KEY</code> en tu <code>.env</code>.</div>
-            <?php endif; ?>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
 
   <?php include __DIR__ . '/components/footer.php'; ?>
 
@@ -171,23 +178,6 @@ $methods = array_values(array_filter(array_map('trim', explode(',', (string) env
         }
       });
     });
-
-    const payButton = document.getElementById('payButton');
-    if (payButton) {
-      payButton.addEventListener('click', async () => {
-        payButton.disabled = true;
-        payButton.textContent = 'Generando checkout...';
-        try {
-          const data = await StoreApi.post('<?= e(base_url('api/checkout/create.php')) ?>');
-          if (!data.checkout_url) throw new Error('Conekta no devolvió URL de checkout.');
-          window.location.href = data.checkout_url;
-        } catch (error) {
-          payButton.disabled = false;
-          payButton.textContent = 'Pagar con Conekta';
-          showCartMessage('danger', error.message);
-        }
-      });
-    }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

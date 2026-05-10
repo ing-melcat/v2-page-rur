@@ -40,6 +40,16 @@ $facturamaDemoMode = facturama_demo_mode();
           </div>
         </div>
       </div>
+
+      <?php
+        $navItems = [
+          ['label' => 'Productos', 'href' => base_url('pages/product.php')],
+          ['label' => 'Carrito', 'href' => base_url('pages/cart.php')],
+          ['label' => 'Compras recientes', 'href' => base_url('pages/purchases.php')],
+          ['label' => 'Facturas', 'href' => base_url('pages/invoices.php'), 'active' => true],
+        ];
+      ?>
+      <?php include __DIR__ . '/components/page-nav.php'; ?>
     </section>
 
     <section class="rur-page-section">
@@ -124,6 +134,10 @@ $facturamaDemoMode = facturama_demo_mode();
       </div>
     </section>
   </main>
+
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
+
+  <?php include __DIR__ . '/components/footer.php'; ?>
 
   <script src="<?= e(base_url('assets/js/store-api.js')) ?>"></script>
   <script>

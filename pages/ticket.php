@@ -51,6 +51,19 @@ if (!$order) {
     </section>
 
     <section class="rur-page-section">
+      <?php
+        $navItems = [
+          ['label' => 'Productos', 'href' => base_url('pages/product.php')],
+          ['label' => 'Carrito', 'href' => base_url('pages/cart.php')],
+          ['label' => 'Compras recientes', 'href' => base_url('pages/purchases.php')],
+          ['label' => 'Facturas', 'href' => base_url('pages/invoices.php')],
+          ['label' => 'Ticket', 'href' => '#', 'active' => true],
+        ];
+      ?>
+      <?php include __DIR__ . '/components/page-nav.php'; ?>
+    </section>
+
+    <section class="rur-page-section">
       <div class="rur-panel">
         <div class="text-center mb-4">
           <img src="<?= e(base_url('resources/RUR_logo_white.png')) ?>" alt="RUR" width="70" class="bg-dark rounded p-2 mb-2">
@@ -98,5 +111,10 @@ if (!$order) {
       </div>
     </section>
   </main>
+
+  <?php include __DIR__ . '/components/last_modified.php'; ?>
+
+  <?php include __DIR__ . '/components/footer.php'; ?>
+
 </body>
 </html>
