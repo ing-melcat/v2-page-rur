@@ -90,7 +90,7 @@
           <div class="col-lg-8">
             <span class="rur-kicker mb-3">Projects</span>
             <h1 class="rur-section-title mb-2">Research Unit of Robotics Projects</h1>
-            <p class="rur-subtitle mb-0">La pagina de proyectos ahora abre con el mismo header visual del flujo de tienda para unificar la experiencia del sitio.</p>
+            <p class="rur-subtitle mb-0">Una probadia de los proyecto que se  estan gestando en la RUR para los proximos dias.</p>
           </div>
           <div class="col-lg-4">
             <div class="rur-methods justify-content-lg-end">
